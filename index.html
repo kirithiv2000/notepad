@@ -194,7 +194,7 @@
             var inputText = e.target.value;
             var selectedText = getText();
             console.log(selectedText,inputText)
-            var replacedText = inputText.replace(selectedText,`<u>${selectedText}</u>`)
+            var replacedText = inputText.replace(selectedText,`${selectedText}`)
             alert(index)
             lines[index].value =  replacedText;
             console.log(lines[index],"")
