@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,15 +13,17 @@
             box-sizing: border-box;
             outline: none;
         }
-        body{
+
+        body {
             font-size: 18px;
             font-family: sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: yellow;
+            background-color: rgb(251, 235, 245);
         }
-        .container{
+
+        .container {
             max-width: 300px;
             /* height: 100vh; */
 
@@ -29,13 +32,15 @@
             flex-direction: column;
             background-color: grey;
             padding: 25px 10px;
-            
+
         }
-        .line-wrap{
+
+        .line-wrap {
             margin-bottom: 5px;
             display: flex;
         }
-        .line{
+
+        .line {
             background-color: transparent;
             border: none;
             border-bottom: 1px solid white;
@@ -43,7 +48,7 @@
             font-size: 20px;
         }
 
-        .line-wrap::after{
+        .line-wrap::after {
             content: "";
             display: inline-block;
             width: 15px;
@@ -52,22 +57,26 @@
             border-radius: 50%;
             background-color: white;
         }
-        .line-wrap:last-of-type{
+
+        .line-wrap:last-of-type {
             margin-bottom: 0;
         }
-        .title-wrap{
+
+        .title-wrap {
             margin-bottom: 20px;
             font-size: 20px;
 
         }
-        .title{
+
+        .title {
             border: none;
             border-bottom: 1px solid black;
             background-color: transparent;
             font-size: 20px;
             max-width: 250px;
         }
-        .btn{
+
+        .btn {
             max-width: 90px;
             padding: 10px 15px;
             border: none;
@@ -77,24 +86,28 @@
             background-color: rgb(0, 187, 93);
             border-radius: 5px;
         }
-        .edit-btn{
-            color: red;
+
+        .edit-btn {
+            background-color: rgb(255, 41, 69);
         }
-        .line:disabled{
+
+        .line:disabled {
             color: black;
             border-bottom: 1px solid black;
         }
-        @media only screen and (min-width:640px){
-            .container{
+
+        @media only screen and (min-width:640px) {
+            .container {
                 min-height: 600px;
             }
         }
     </style>
-    </head>
+</head>
+
 <body>
     <div class="container">
-        <div class="title-wrap" >
-            <span >
+        <div class="title-wrap">
+            <span>
                 Title:
             </span>
             <input type="text" class="title">
@@ -113,8 +126,6 @@
         </div>
         <div class="line-wrap">
             <input type="text" class="line">
-        </div><div class="line-wrap">
-            <input type="text" class="line">
         </div>
         <div class="line-wrap">
             <input type="text" class="line">
@@ -127,7 +138,11 @@
         </div>
         <div class="line-wrap">
             <input type="text" class="line">
-        </div><div class="line-wrap">
+        </div>
+        <div class="line-wrap">
+            <input type="text" class="line">
+        </div>
+        <div class="line-wrap">
             <input type="text" class="line">
         </div>
         <div class="line-wrap">
@@ -139,72 +154,74 @@
         <button class="btn">Save</button>
     </div>
     <script>
-        
-        doSomething = () =>{
-                
-                var save = true
-                var saveEdit = () => {
-                    var lines = document.querySelectorAll(".line")
-                    var button = document.getElementsByClassName('btn')[0]
-                    if (save===true){
-                        document.getElementsByClassName('btn')[0].innerHTML = "Edit"
-                        save = false
-                    lines.forEach((line,index)=>{
-                        lines[index].setAttribute("disabled","disabled")
+
+        doSomething = () => {
+
+            var save = true
+            var saveEdit = () => {
+                var lines = document.querySelectorAll(".line")
+                var button = document.getElementsByClassName('btn')[0]
+                if (save === true) {
+                    document.getElementsByClassName('btn')[0].innerHTML = "Edit"
+                    save = false
+                    lines.forEach((line, index) => {
+                        lines[index].setAttribute("disabled", "disabled")
                     })
-                    
-                }else{
+                    button.classList.toggle("edit-btn");
+
+                } else {
                     document.getElementsByClassName('btn')[0].innerHTML = "Save"
                     save = true
-                    lines.forEach((line,index)=>{
+                    lines.forEach((line, index) => {
                         lines[index].removeAttribute("disabled")
-                })
-                        
-                    }
-                }
-                var setLineOffset = () =>{
-                    var lines = document.querySelectorAll(".line")
-                    lines.forEach((line,index)=>{
-                    line.setAttribute("maxlength",line.offsetWidth/12)
+                        button.classList.toggle("edit-btn");
                     })
+
                 }
-                document.getElementsByClassName('btn')[0].addEventListener("click",saveEdit)
-                window.addEventListener('resize',setLineOffset)
-                
             }
-        
-            setTimeout(() => {  
-        
-        doSomething();
-        
+            var setLineOffset = () => {
+                var lines = document.querySelectorAll(".line")
+                lines.forEach((line, index) => {
+                    line.setAttribute("maxlength", line.offsetWidth / 12)
+                })
+            }
+            document.getElementsByClassName('btn')[0].addEventListener("click", saveEdit)
+            button.addEventListener("click", saveEdit)
+            window.addEventListener('resize', setLineOffset)
+
+        }
+
+        setTimeout(() => {
+
+            doSomething();
+
         }, 0);
-        var getText = () =>{
-                if(document.getSelection){
-                    var text = document.getSelection().toString();
-                    return text
-                }else{
-                    if (document.selection){
-                        var text2 = document.selection().createRange()
-                        return text2
-                    }
+        var getText = () => {
+            if (document.getSelection) {
+                var text = document.getSelection().toString();
+                return text
+            } else {
+                if (document.selection) {
+                    var text2 = document.selection().createRange()
+                    return text2
                 }
             }
+        }
         var lines = document.querySelectorAll(".line")
-        lines.forEach((line,index)=>line.addEventListener('select',(e)=>{
+        lines.forEach((line, index) => line.addEventListener('select', (e) => {
             var inputText = e.target.value;
             var selectedText = getText();
-            console.log(selectedText,inputText)
-            var replacedText = inputText.replace(selectedText,`${selectedText}`)
+            console.log(selectedText, inputText)
+            var replacedText = inputText.replace(selectedText, `${selectedText}`)
             alert(index)
-            lines[index].value =  replacedText;
-            console.log(lines[index],"")
-                
-
-            }))
+            lines[index].value = replacedText;
+            console.log(lines[index], "")
+        }))
 
 
 
-            </script>
-        
+    </script>
+
 </body>
+
 </html>
